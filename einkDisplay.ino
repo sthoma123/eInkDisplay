@@ -27,7 +27,7 @@
 #include <SPI.h>                // In-built
 #include <time.h>               // In-built
 
-#include "owm_credentials.h"
+#include "own_credentials.h"
 #include "forecast_record.h"
 #include "lang.h"
 
@@ -1335,39 +1335,6 @@ bool hausIDecoderesult(WiFiClient& json) {
   }
 }
 
-
-const char* certificate_home = \
-"-----BEGIN CERTIFICATE-----\n" \
-"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\n" \
-"/jOctmKywpJ6jE4=\n" \ 
-"-----END CERTIFICATE-----\n" ;
 
 
 bool hausIGetJsonData(WiFiClient& client, const char* host, const char* httpPort , String box, String dps){

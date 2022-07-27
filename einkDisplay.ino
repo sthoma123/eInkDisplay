@@ -111,6 +111,7 @@ typedef struct {
 // HausI daten to be displayed
 typedef struct {
   measure_type BattSoC;
+  measure_type CarSoC;
   measure_type OutTemp;
   measure_type GridPower;
   measure_type PVTotal;
@@ -1170,6 +1171,10 @@ void DisplayHausI(int x, int y) {
 
   drawMeas (x,y, CurrHausIData.BattSoC);
   y+=LINEHEIGHT;
+  
+  drawMeas (x,y, CurrHausIData.CarSoC);
+  y+=LINEHEIGHT;
+  
   drawMeas (x,y, CurrHausIData.GridPower);
   y+=LINEHEIGHT;
   drawMeas (x,y, CurrHausIData.PVTotal);
@@ -1327,6 +1332,7 @@ bool hausIDecoderesult(WiFiClient& json) {
 
   for (const auto& dataLine : root["rv"].as<JsonArray>()) {
     hausIDecodeLine("BX/BATTERX/1074", dataLine, &CurrHausIData.BattSoC, "Batt");
+    hausIDecodeLine("MQTT/teslamate/cars/1/usable_battery_level@", dataLine, &CurrHausIData.CarSoC,  "Car");    
     hausIDecodeLine("TEMP/00042d9aabff", dataLine, &CurrHausIData.OutTemp, "Outdoor");
     hausIDecodeLine("BX/BATTERX/GRIDPOWER", dataLine, &CurrHausIData.GridPower, "GridPower");
     hausIDecodeLine("TEMP/00042cb4d4ff", dataLine, &CurrHausIData.WzTemp, "Indoor");
@@ -1389,7 +1395,7 @@ void get_data_hausI(WiFiClient client) {
   DynamicJsonDocument doc(capacity);
   //json_data = json_hausI(client, host, httpPort, "");
 
-  hausIGetJsonData(client, homeIP, homePort, "raspi", "%22BX/BATTERX/1074%22,%22BX/BATTERX/GRIDPOWER%22");
+  hausIGetJsonData(client, homeIP, homePort, "raspi", "%22BX/BATTERX/1074%22,%22BX/BATTERX/GRIDPOWER%22,%22MQTT/teslamate/cars/1/usable_battery_level@raspi%22");
   hausIGetJsonData(client, homeIP, homePort, "kr", "%22TEMP/00042d9aabff%22,%22ALIAS/PVTotal%22,%22TEMP/00042cb4d4ff%22"); // temp draussen, pv total
   hausIGetJsonData(client, homeIP, homePort, "zr", "%22MOD/ttyUSB.modbus/2/ZAEHLER/SystemPower%22"); // Haus Verbrauch
   

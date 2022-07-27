@@ -11,7 +11,7 @@
 #define LOGGING
 
 #include <Arduino.h>            // In-built
-#include <esp_task_wdt.h>       // In-built
+#include <esp_task_wdt.h>       // In-builtc
 #include "freertos/FreeRTOS.h"  // In-built
 #include "freertos/task.h"      // In-built
 #include "epd_driver.h"         // https://github.com/Xinyuan-LilyGO/LilyGo-EPD47
@@ -1332,7 +1332,7 @@ bool hausIDecoderesult(WiFiClient& json) {
 
   for (const auto& dataLine : root["rv"].as<JsonArray>()) {
     hausIDecodeLine("BX/BATTERX/1074", dataLine, &CurrHausIData.BattSoC, "Batt");
-    hausIDecodeLine("MQTT/teslamate/cars/1/usable_battery_level@", dataLine, &CurrHausIData.CarSoC,  "Car");    
+    hausIDecodeLine("MQTT/teslamate/cars/1/usable_battery_level@raspi", dataLine, &CurrHausIData.CarSoC,  "Car");    
     hausIDecodeLine("TEMP/00042d9aabff", dataLine, &CurrHausIData.OutTemp, "Outdoor");
     hausIDecodeLine("BX/BATTERX/GRIDPOWER", dataLine, &CurrHausIData.GridPower, "GridPower");
     hausIDecodeLine("TEMP/00042cb4d4ff", dataLine, &CurrHausIData.WzTemp, "Indoor");
